@@ -30,5 +30,17 @@ pipeline {
                 '''
             }
         }
+
+        stage('Deploy to TEST') {
+            when { not { branch "main" } }
+
+            steps {
+
+                sh '''
+                    oc rollout latest dc/home-automation \
+                    -n jramirez-home-automation-lab-test
+                '''
+            }
+        }
     }
 }
